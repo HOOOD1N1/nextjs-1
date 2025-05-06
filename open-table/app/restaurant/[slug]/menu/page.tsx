@@ -36,8 +36,8 @@ export default function RestaurantMenu()
       <div className="bg-white w-[100%] rounded p-3 shadow">
         {/* RESAURANT NAVBAR */}
         <nav className="flex text-reg border-b pb-2">
-          <Link href="" className="mr-7"> Overview </Link>
-          <Link href="" className="mr-7"> Menu </Link>
+          <Link href="/restaurant/milestone-grill" className="mr-7"> Overview </Link>
+          <Link href="/restaurant/milestone-grill/menu" className="mr-7"> Menu </Link>
         </nav>
         {/* RESAURANT NAVBAR */} {/* MENU */}
         <main className="bg-white mt-5">

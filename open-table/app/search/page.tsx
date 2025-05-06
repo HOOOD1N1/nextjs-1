@@ -94,7 +94,7 @@ export default function Search()
               </div>
             </div>
             <div className="text-red-600">
-              <Link href="">View more information</Link>
+              <Link href="/">View more information</Link>
             </div>
           </div>
         </div>

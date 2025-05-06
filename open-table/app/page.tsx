@@ -3,7 +3,7 @@
 import { Inter } from "next/font/google";
 import Link from "next/link";
 
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const inter = Inter({
@@ -52,7 +52,10 @@ export default function Home() {
               value={location}
               onChange={(e) => setLocation(e.target.value)}
             />
-            <button className="rounded bg-red-600 px-9 py-2 text-white">
+            <button className="rounded bg-red-600 px-9 py-2 text-white" onClick={() => {
+              if(location === "banana") return;
+              router.push("/search");
+            }}>
               Let's go
             </button>
           </div>
