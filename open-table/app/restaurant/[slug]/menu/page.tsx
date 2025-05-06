@@ -1,5 +1,4 @@
 import NavBar from "@/app/components/NavBar";
-import Link from "next/link";
 import Header from "../components/Header";
 import RestaurantNavBar from "../components/RestaurantNavBar";
 import Menu from "../components/Menu";
@@ -17,7 +16,6 @@ export default function RestaurantMenu()
         <Menu />
       </div>
     </div>
-    {/* DESCRIPTION PORTION */}
   </main>
 </main>
 
