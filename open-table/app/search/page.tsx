@@ -2,7 +2,7 @@ import Header from "./components/Header";
 import SearchSideBar from "./components/SearchSideBar";
 import RestaurantCard from "./components/RestaurantCard";
 import { Metadata } from "next";
-import { PrismaClient } from "@/prisma/generated/prisma/client";
+import { PRICE, PrismaClient } from "@/prisma/generated/prisma/client";
 
 export const metadata: Metadata = {
     title: "Search | OpenTables",
@@ -37,17 +37,36 @@ const fetchRestaurantsByCity = (city: string | undefined) => {
     });
 }
 
-export default async function Search({ searchParams }: { searchParams: { city: string } }) {
-    const { city } = await searchParams;
+const fetchLocations = () => {
+    return prisma.location.findMany();
+}
+
+const fetchCuisines = () => {
+
+    return prisma.cuisine.findMany();
+}
+
+export default async function Search({ searchParams }: { searchParams: { city?: string, cuisine?: string, price?: PRICE } }) {
+    const { city, cuisine, price } = await searchParams;
 
     const restaurants = await fetchRestaurantsByCity(city);
+    const locations = await fetchLocations();
+    const cuisines = await fetchCuisines();
     return (
         <>
             <Header />
             <div className="flex py-4 m-auto w-2/3 justify-between items-start">
-                <SearchSideBar />
+                <SearchSideBar locations={locations} cuisines={cuisines} city={city} cuisine={cuisine} price={price} />
                 <div className="w-5/6">
-                    {restaurants.length ? <RestaurantCard /> : <p>Sorry, we found no restaurant in this area</p>}
+                    {restaurants.length ? <>
+                        {
+                            restaurants.map(restaurant => (
+                                <RestaurantCard restaurant={restaurant} key={restaurant.id} />
+                            ))
+                        }
+                    </> : (<p>Sorry, we found no restaurant in this area</p>
+
+                    )}
                 </div>
             </div>
         </>
