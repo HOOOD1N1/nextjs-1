@@ -26,7 +26,7 @@ export default function Stars({ reviews, rating }: { reviews: Review[], rating?:
 
         return stars.map(star => {
             return (
-                <Image src={star} alt="" className="w-4 h-4 mr-1" />
+                <Image key={star.src} src={star} alt="" className="w-4 h-4 mr-1" />
             )
         })
     }
