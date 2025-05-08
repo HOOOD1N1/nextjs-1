@@ -7,6 +7,7 @@ import AuthModalInputs from "./AuthModalInputs";
 // import useAuth from "../../hooks/useAuth";
 // import { AuthenticationContext } from "../context/AuthContext";
 import { Alert, CircularProgress } from "@mui/material";
+import useAuth from "@/auth/useAuth";
 
 const style = {
   position: "absolute" as "absolute",
@@ -22,9 +23,10 @@ const style = {
 
 export default function AuthModal({ isSignin }: { isSignin: boolean }) {
   const [open, setOpen] = useState(false);
+  const [disabled, setDisabled] = useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  // const { signin, signup } = useAuth();
+  const { signin, signup } = useAuth();
   //   const { loading, data, error } = useContext(AuthenticationContext);
 
   const renderContent = (signinContent: string, signupContent: string) => {
@@ -47,8 +49,6 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
     password: "",
   });
 
-  const [disabled, setDisabled] = useState(true);
-
   useEffect(() => {
     if (isSignin) {
       if (inputs.password && inputs.email) {
@@ -70,13 +70,13 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
     setDisabled(true);
   }, [inputs]);
 
-  // const handleClick = () => {
-  //   if (isSignin) {
-  //     signin({ email: inputs.email, password: inputs.password }, handleClose);
-  //   } else {
-  //     signup(inputs, handleClose);
-  //   }
-  // };
+  const handleClick = () => {
+    if (isSignin) {
+      signin({ email: inputs.email, password: inputs.password }, handleClose);
+    } else {
+      signup(inputs, handleClose);
+    }
+  };
 
   return (
     <div>
@@ -128,7 +128,7 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
             <button
               className="uppercase bg-red-600 w-full text-white p-3 rounded text-sm mb-5 disabled:bg-gray-400"
               disabled={disabled}
-            // onClick={handleClick}
+              onClick={handleClick}
             >
               {renderContent("Sign In", "Create Account")}
             </button>

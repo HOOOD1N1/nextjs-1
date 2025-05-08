@@ -24,9 +24,9 @@ export default function Stars({ reviews, rating }: { reviews: Review[], rating?:
             else stars.push(emptyStar);
         }
 
-        return stars.map(star => {
+        return stars.map((star, i) => {
             return (
-                <Image key={star.src} src={star} alt="" className="w-4 h-4 mr-1" />
+                <Image key={i} src={star} alt="" className="w-4 h-4 mr-1" />
             )
         })
     }
