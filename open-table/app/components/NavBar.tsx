@@ -3,7 +3,7 @@ import Link from "next/link";
 import LoginModal from "./AuthModal";
 import { useContext } from "react";
 import { AuthenticationContext } from "../context/AuthContext";
-import useAuth from "@/auth/useAuth";
+import useAuth from "@/hooks/useAuth";
 import AuthModal from "./AuthModal";
 
 
