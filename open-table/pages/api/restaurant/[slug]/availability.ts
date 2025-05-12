@@ -41,7 +41,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             booking_time: true,
             tables: true
         }
+    });
+
+    const bookingTablesObj: { [key: string]: { [key: number]: true } } = {};
+
+    bookings.forEach(booking => {
+        bookingTablesObj[booking.booking_time.toISOString()] = booking.tables.reduce((obj, table) => {
+            return {
+                ...obj,
+                [table.table_id]: true
+            }
+        }, {})
     })
 
-    return res.json({ searchTimes, bookings })
+    return res.json({ searchTimes, bookings, bookingTablesObj })
+    //http://localhost:3000/api/restaurant/vivaan-fine-indian-cuisine-ottawa/availability?day=2023-02-03&time=14:00:00.000Z&partySize=4
 }
