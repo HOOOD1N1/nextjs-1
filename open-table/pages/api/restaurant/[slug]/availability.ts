@@ -1,6 +1,9 @@
 import { error } from "console";
 import { NextApiRequest, NextApiResponse } from "next";
 import { times } from "../../../../data";
+import { PrismaClient } from "@/prisma/generated/prisma/client";
+
+const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { slug, day, time, partySize } = req.query as {
@@ -26,5 +29,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         })
     }
 
-    return res.json({ searchTimes })
+    const bookings = await prisma.booking.findMany({
+        where: {
+            booking_time: {
+                gte: new Date(`${day}T${searchTimes[0]}`),
+                lte: new Date(`${day}T${searchTimes[searchTimes.length - 1]}`)
+            }
+        },
+        select: {
+            number_of_people: true,
+            booking_time: true,
+            tables: true
+        }
+    })
+
+    return res.json({ searchTimes, bookings })
 }
