@@ -18,7 +18,7 @@ export default function useAvailabilities() {
                     partySize
                 }
             });
-            console.log(response)
+            console.log(response.data)
             setLoading(false)
             setData(response.data)
         } catch (error: any) {
